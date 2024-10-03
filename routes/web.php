@@ -25,6 +25,7 @@ Auth::routes();
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::middleware('auth')->group(function () {
-    Route::resource('/owners', OwnerController::class);
-    Route::resource('/pets', PetController::class);
-});
+    // Route::resource('/owners', OwnerController::class);
+    // Route::resource('/pets', PetController::class);
+});Route::resource('/user', App\Http\Controllers\UserController::class);
+Route::resource('/vaccination', App\Http\Controllers\VaccinationController::class);

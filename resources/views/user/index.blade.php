@@ -1,6 +1,7 @@
 @extends('tablar::page')
+
 @section('title')
-    Owner
+    User
 @endsection
 
 @section('content')
@@ -14,23 +15,22 @@
                         List
                     </div>
                     <h2 class="page-title">
-                        {{ __('Owner ') }}
+                        {{ __('User ') }}
                     </h2>
                 </div>
                 <!-- Page title actions -->
                 <div class="col-12 col-md-auto ms-auto d-print-none">
                     <div class="btn-list">
-                        <a href="{{ route('owners.create') }}" class="btn btn-primary d-none d-sm-inline-block">
-                            <i class="ti ti-plus"></i>
-                            Create Owner
-                        </a>
-                        <a href="#" class="btn btn-secondary d-none d-sm-inline-block">
-                            <i class="ti ti-download"></i>
-                            Export Owners
-                        </a>
-                        <a href="#" class="btn btn-success d-none d-sm-inline-block">
-                            <i class="ti ti-file-upload"></i>
-                            Import Owners
+                        <a href="{{ route('users.create') }}" class="btn btn-primary d-none d-sm-inline-block">
+                            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                 stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <line x1="12" y1="5" x2="12" y2="19"/>
+                                <line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                            Create User
                         </a>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Owners</h3>
+                            <h3 class="card-title">User</h3>
                         </div>
                         <div class="card-body border-bottom py-3">
                             <div class="d-flex">
@@ -61,10 +61,12 @@
                                 </div>
                                 <div class="ms-auto text-muted">
                                     Search:
-                                    <form action="{{ route('owners.index') }}" method="GET" class="ms-2 d-inline-block">
-                                        <input type="text" name="search" class="form-control form-control-sm" 
-                                               placeholder="Search owner..." value="{{ request('search') }}">
-                                    </form>
+                                    <div class="ms-2 d-inline-block">
+                                        <form action="{{ route('user.index') }}" method="GET" class="ms-2 d-inline-block">
+                                            <input type="text" name="search" class="form-control form-control-sm" 
+                                                    placeholder="Search user or email" value="{{ request('search') }}">
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -86,25 +88,24 @@
                                     </th>
                                     
 										<th>Name</th>
-										
-										<th>Phone</th>
-										<th>Address</th>
-										
+										<th>Email</th>
+										<th>Permission</th>
 
                                     <th class="w-1"></th>
                                 </tr>
                                 </thead>
 
                                 <tbody>
-                                @forelse ($owners as $owner)
+                                @forelse ($users as $user)
                                     <tr>
                                         <td><input class="form-check-input m-0 align-middle" type="checkbox"
-                                                   aria-label="Select owner"></td>
+                                                   aria-label="Select user"></td>
                                         <td>{{ ++$i }}</td>
                                         
-											<td>{{ $owner->name }}</td>
-											<td>{{ $owner->phone }}</td>
-											<td>{{ $owner->address }}</td>
+											<td>{{ $user->name }}</td>
+											<td>{{ $user->email }}</td>
+											<td></td>
+
 
                                         <td>
                                             <div class="btn-list flex-nowrap">
@@ -115,15 +116,15 @@
                                                     </button>
                                                     <div class="dropdown-menu dropdown-menu-end">
                                                         <a class="dropdown-item"
-                                                           href="{{ route('owners.show',$owner->id) }}">
+                                                           href="{{ route('users.show',$user->id) }}">
                                                             View
                                                         </a>
                                                         <a class="dropdown-item"
-                                                           href="{{ route('owners.edit',$owner->id) }}">
+                                                           href="{{ route('users.edit', $user) }}">
                                                             Edit
                                                         </a>
                                                         <form
-                                                            action="{{ route('owners.destroy',$owner->id) }}"
+                                                            action="{{ route('users.destroy',$user->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
@@ -146,8 +147,8 @@
 
                             </table>
                         </div>
-                        <div class="card-footer d-flex align-items-center">
-                            {!! $owners->appends(request()->query())->links('tablar::pagination') !!}
+                       <div class="card-footer d-flex align-items-center">
+                            {!! $users->links('tablar::pagination') !!}
                         </div>
                     </div>
                 </div>

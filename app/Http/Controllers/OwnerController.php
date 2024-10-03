@@ -16,12 +16,23 @@ class OwnerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $owners = Owner::paginate(10);
+        // Obtener el término de búsqueda desde la solicitud
+        $search = $request->input('search');
 
+        // Si existe un término de búsqueda, aplicar el filtro en la consulta
+        $owners = Owner::when($search, function ($query, $search) {
+        return $query->where('name', 'LIKE', "%{$search}%")
+                     ->orWhere('phone', 'LIKE', "%{$search}%")
+                     ->orWhere('address', 'LIKE', "%{$search}%");
+        })
+        ->paginate(10);
+
+        // Retornar la vista, asegurando que 'search' se mantenga en las consultas posteriores
         return view('owner.index', compact('owners'))
-            ->with('i', (request()->input('page', 1) - 1) * $owners->perPage());
+            ->with('i', (request()->input('page', 1) - 1) * $owners->perPage())
+            ->with('search', $search); // Pasar la variable de búsqueda a la vista
     }
 
     /**

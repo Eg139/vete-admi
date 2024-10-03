@@ -42,7 +42,7 @@ return [
     'auth_logo' => [
         'enabled' => false,
         'img' => [
-            'path' => 'assets/tablar-logo.png',
+            'path' => 'images/logo.png',
             'alt' => 'Auth Logo',
             'class' => '',
             'width' => 50,
@@ -152,13 +152,18 @@ return [
         [
             'text' => 'Owners',
             'icon' => 'ti ti-user',
-            'url' => '/owners'
+            'url' => 'admin/owners'
         ],
 
         [
             'text' => 'Pets',
-            'url' => '/pets',
+            'url' => 'admin/pets',
             'icon' => 'ti ti-paw'
+        ],
+        [
+            'text' => 'User',
+            'url' => 'admin/users',
+            'icon' => 'ti ti-users'
         ],
 
 
